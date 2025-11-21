@@ -13,6 +13,7 @@ int main() {
   float price;
   std::cout << "：";
   std::cin >> n;
+  // NOTE: 顺序要和menu.cpp里对应
   switch (n) {
   case 1:
     price = choose_daily();
