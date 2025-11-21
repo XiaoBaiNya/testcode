@@ -6,7 +6,7 @@
 int main() {
   std::cout << "欢迎来到我的商店，想要什么？" << std::endl;
   for (int i = 0; i < std::size(menu); i++) {
-    std::cout << menu[i].num << "." << menu[i].name << std::endl;
+    std::cout << i + 1 << "." << menu[i].name << std::endl;
   }
 
   int n, num;

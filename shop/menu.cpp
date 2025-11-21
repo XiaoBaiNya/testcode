@@ -2,10 +2,9 @@
 #include <iostream>
 #include <iterator>
 struct One {
-  int num;
   std::string name;
 };
-One menu[]{{1, "日用品"}, {2, "文具"}, {3, "食品"}};
+One menu[]{{"日用品"}, {"文具"}, {"食品"}};
 
 float choose_daily() {
   int num;
@@ -21,6 +20,7 @@ float choose_daily() {
   }
   return daily[num - 1].price;
 }
+
 float choose_school() {
   int num;
   for (int i = 0; i < std::size(school); i++) {
@@ -35,6 +35,7 @@ float choose_school() {
   }
   return school[num - 1].price;
 }
+
 float choose_eat() {
   int num;
   for (int i = 0; i < std::size(eat); i++) {
