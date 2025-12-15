@@ -1,8 +1,24 @@
+#include <chrono>
 #include <iostream>
+#include <thread>
 int p1[21], p2[21];
 int p1_num = 2, p2_num = 2;
 int p1_all, p2_all;
 int rand_pai() { return rand() % 10 + 1; }
+void pt(std::string text) {
+  int a = text.size();
+  int b = 0;
+  while (a > b) { // 循环一
+    std::string c = text.substr(0, b);
+    char d = 33;
+    while (d <= text[b]) { // 循环二
+      std::cout << c << d << std::endl;
+      d++;
+      std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    }
+    b++;
+  }
+}
 void chou(int x) {
   int *c_p = NULL;
   int *num_p = NULL;
@@ -32,26 +48,30 @@ void p2_rand(int x) {
     int r = rand() % 10 + 1;
     if (r < x) {
       chou(2);
-      std::cout << "对方抽了一张牌" << std::endl
-                << "现在对方有" << p2_num << "张牌" << std::endl
-                << std::endl;
+      std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+      std::cout << "对方抽了一张牌" << std::endl;
+      std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+      std::cout << "现在对方有" << p2_num << "张牌" << std::endl << std::endl;
     } else {
-      std::cout << "对方不要牌" << std::endl
-                << "现在对方有" << p2_num << "张牌" << std::endl
-                << std::endl;
+      std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+      std::cout << "对方不要牌" << std::endl;
+      std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+      std::cout << "现在对方有" << p2_num << "张牌" << std::endl << std::endl;
     }
   } else {
-    std::cout << "对方不要牌" << std::endl
-              << "现在对方有" << p2_num << "张牌" << std::endl
-              << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+    std::cout << "对方不要牌" << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+    std::cout << "现在对方有" << p2_num << "张牌" << std::endl << std::endl;
   }
 }
 void p2_action() {
   if (p2_all < 12) {
     chou(2);
-    std::cout << "对方抽了一张牌" << std::endl
-              << "现在对方有" << p2_num << "张牌" << std::endl
-              << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+    std::cout << "对方抽了一张牌" << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+    std::cout << "现在对方有" << p2_num << "张牌" << std::endl << std::endl;
   } else if (p2_all < 15) {
     p2_rand(8); // p2=12 13 14 p2<p1 70抽30不抽
   } else if (p2_all < 17) {
@@ -63,15 +83,17 @@ void p2_action() {
   }
 }
 bool p1_action() {
-  std::cout << "你当前有" << p1_num << "张牌,点数一共是" << p1_all << std::endl
-            << "要抽牌吗？（1.抽 2.不抽）" << std::endl
-            << "：";
+  std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+  std::cout << "你当前有" << p1_num << "张牌,点数一共是" << p1_all << std::endl;
+  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::cout << "要抽牌吗？（1.抽 2.不抽）" << std::endl << "：";
   int x;
   bool stop = true;
   std::cin >> x;
   switch (x) {
   case 1:
     chou(1);
+    std::this_thread::sleep_for(std::chrono::milliseconds(1500));
     std::cout << "你现在有" << p1_num << "张牌,点数一共是" << p1_all
               << std::endl
               << std::endl;
@@ -85,10 +107,13 @@ bool p1_action() {
 bool is_check_false() { return (p1_all > 21 || p2_all > 21) ? true : false; }
 int main() {
   std::srand(time(0));
-  int money, earn_money = 0;
+  int money, earn_money = 0, money_bak;
   std::cout << "输入你的金额（元）：";
   std::cin >> money;
+  money_bak = money;
+  std::this_thread::sleep_for(std::chrono::milliseconds(500));
   std::cout << "如果对方爆牌了，就会赢双倍的钱！！！" << std::endl;
+  std::this_thread::sleep_for(std::chrono::milliseconds(500));
   std::cout << "输入赌注的金额（元）：";
   std::cin >> earn_money;
   while (true) {
@@ -104,69 +129,99 @@ int main() {
     p1_num = 2, p2_num = 2;
     p2_all = p2[0] + p2[1];
     p1_all = p1[0] + p1[1];
-
+    pt("3....2....1");
     std::cout << "游戏开始！！！" << std::endl;
     while (keep) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(1500));
       std::cout << std::endl << "对方的回合！" << std::endl;
       p2_action();
       if (is_check_false()) {
         if (p1_all > 21) {
-          std::cout << "你的点数为：" << p1_all << " 爆牌啦！" << std::endl
-                    << "你输了" << earn_money * 2 << "元";
+          std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+          std::cout << " 爆牌啦！" << std::endl;
+          std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+          std::cout << "你输了" << earn_money * 2 << "元";
           money -= earn_money * 2;
           break;
         } else if (p2_all > 21) {
-          std::cout << "对方的点数为：" << p2_all << " 爆牌啦！" << std::endl
-                    << "你赢了" << earn_money * 2 << "元,双倍金钱！！！";
+          std::cout << "对方的点数为：" << p2_all << " 爆牌啦！" << std::endl;
+          std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+          std::cout << "你赢了" << earn_money * 2 << "元,双倍金钱！！！";
           money += earn_money * 2;
           break;
         }
       }
+      std::this_thread::sleep_for(std::chrono::milliseconds(1500));
       std::cout << "现在是你的回合！" << std::endl;
       if (p1_action()) {
+        std::cout << std::endl << "对方的回合！" << std::endl;
+        p2_action();
         if (p1_all > p2_all) {
-          std::cout << "你的点数为：" << p1_all << std::endl
-                    << "对方的点数为：" << p2_all << std::endl
-                    << "你赢了" << earn_money << "元！";
+          std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+          std::cout << "你的点数为：" << p1_all << std::endl;
+          std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+          std::cout << "对方的点数为：" << p2_all << std::endl;
+          std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+          std::cout << "你赢了" << earn_money << "元！";
           money += earn_money;
           break;
         } else if (p1_all < p2_all) {
-          std::cout << "你的点数为：" << p1_all << std::endl
-                    << "对方的点数为：" << p2_all << std::endl
-                    << "你输了" << earn_money << "元";
+          std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+          std::cout << "你的点数为：" << p1_all << std::endl;
+          std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+          std::cout << "对方的点数为：" << p2_all << std::endl;
+          std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+          std::cout << "你输了" << earn_money << "元";
           money -= earn_money;
           break;
         } else {
+          std::this_thread::sleep_for(std::chrono::milliseconds(1500));
           std::cout << "你的点数和对方的点数都为：" << p1_all << std::endl;
+          std::this_thread::sleep_for(std::chrono::milliseconds(1500));
           std::cout << "双赢啦~（不给钱）";
           break;
         }
       }
       if (is_check_false()) {
         if (p1_all > 21) {
-          std::cout << "你的点数为：" << p1_all << " 爆牌啦！" << std::endl
-                    << "你输了" << earn_money * 2 << "元";
+          std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+          std::cout << " 爆牌啦！" << std::endl;
+          std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+          std::cout << "你输了" << earn_money * 2 << "元";
           money -= earn_money * 2;
           break;
         } else if (p2_all > 21) {
-          std::cout << "对方的点数为：" << p2_all << " 爆牌啦！" << std::endl
-                    << "你赢了" << earn_money * 2 << "元,双倍金钱！！！";
+          std::cout << "对方的点数为：" << p2_all << " 爆牌啦！" << std::endl;
+          std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+          std::cout << "你赢了" << earn_money * 2 << "元,双倍金钱！！！";
           money += earn_money * 2;
           break;
         }
       }
     }
-    std::cout << std::endl
-              << std::endl
-              << "你当前的金额为：" << money << std::endl
-              << "还要继续玩吗？（0.不玩了 1.继续）" << std::endl
-              << "：";
+    std::cout << std::endl << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+    std::cout << "你当前的金额为：" << money << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+    std::cout << "还要继续玩吗？（0.不玩了 1.继续）" << std::endl << "：";
     std::cin >> keep;
     bool change = true;
     if (keep) {
       std::cout << "是否压大/缩小赌注？（0.是 1.否）";
       std::cin >> change;
     } else {
+      if ((money - money_bak) < 0) {
+        std::cout << "很遗憾你输掉了" << money_bak - money << "元";
+      } else if (money - money_bak > 0) {
+        for (int i = 0; i <= (money - money_bak); i++) {
+          std::this_thread::sleep_for(std::chrono::milliseconds(2));
+          std::cout << i << std::endl;
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+        std::cout << "恭喜你！你赢得了" << money - money_bak << "元！";
+      } else {
+        std::cout << "没赢钱也没输钱嘛~再接再厉哦！";
+      }
       break;
     }
     if (!change) {
