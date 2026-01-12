@@ -37,23 +37,23 @@ bool isValidScore(double score) {
  */
 stu *inputStudentInfo() {
   std::cout << std::endl << "===输入学生信息===" << std::endl;
-  int totalStudent;
+  int StudentNum;
 student_num_check:
   std::cout << "学生数量：";
-  std::cin >> totalStudent;
-  if (totalStudent <= 0) {
+  std::cin >> StudentNum;
+  if (StudentNum <= 0) {
     std::cout << "学生人数至少为1" << std::endl << "请重新输入";
     goto student_num_check;
   }
   stu *first = new stu{};
   stu *p = first;
-  for (int i = 1; i < totalStudent; i++) {
+  for (int i = 1; i < StudentNum; i++) {
     stu *new_stu = new stu{};
     p->next = new_stu;
     p = new_stu;
   }
   p = first;
-  for (int i = 1; i <= totalStudent; i++) {
+  for (int i = 1; i <= StudentNum; i++) {
     printf("请输入第%d个学生信息：\n", i);
     std::cout << "姓名：";
     std::cin >> p->name;
