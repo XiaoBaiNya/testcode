@@ -101,7 +101,7 @@ student_num_check:
  * @param head 读取头指针
  * @return 是否修改
  */
-bool change_student_information(stu *head) {
+bool change_student_information(stu *const head) {
   std::cout << std::endl << "===更改学生信息===" << std::endl;
   bool is_tosave = false;
   if (head != nullptr) {
@@ -172,7 +172,7 @@ bool change_student_information(stu *head) {
  *
  * @param head 链表头
  */
-void deletelist(stu *head) {
+void deletelist(stu *&head) {
   while (head != nullptr) {
     stu *next = head->next;
     delete head;
@@ -184,7 +184,7 @@ void deletelist(stu *head) {
  *
  * @param head 链表头指针
  */
-void analyzeStudent(stu *head) {
+void analyzeStudent(stu *const head) {
   for (stu *p = head; p != nullptr; p = p->next) {
     stu *p2, *p_max = p;
     for (p2 = p; p2 != nullptr; p2 = p2->next) {
@@ -231,7 +231,7 @@ void analyzeStudent(stu *head) {
  *
  * @param head 链表指针
  */
-void savedata(stu *head, bool is_overwirte) {
+void savedata(stu *const head, bool is_overwirte) {
   std::cout << "是否保存？（y/n）：";
   char action = 'n';
   std::cin >> action;
