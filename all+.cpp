@@ -1,12 +1,10 @@
 #include <iostream>
 int main() {
-  std::string a;
-  std::cin >> a;
-  int b = a.size(), d = 0;
-  while (b >= 1) {
-    char c = a[b - 1];
-    d += c;
-    b--;
+  std::string text;
+  std::cin >> text;
+  int num = 0;
+  for (char i : text) {
+    num += i;
   }
-  std::cout << d;
+  std::cout << num;
 }
